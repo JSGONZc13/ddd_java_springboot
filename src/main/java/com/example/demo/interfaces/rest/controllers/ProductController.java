@@ -1,4 +1,4 @@
-package com.example.demo.interfaces.rest;
+package com.example.demo.interfaces.rest.controllers;
 
 import java.util.List;
 
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.application.use_cases.CreateProduct;
 import com.example.demo.application.use_cases.GetAllProducts;
 import com.example.demo.domain.entities.Product;
-import com.example.demo.interfaces.rest.dto.ApiResponse;
-import com.example.demo.interfaces.rest.dto.CreateProductRequest;
-import com.example.demo.interfaces.rest.dto.ResponseFactory;
+import com.example.demo.interfaces.rest.dto.CreateProduct.CreateProductReq;
+import com.example.demo.interfaces.rest.dto.CreateProduct.CreateProductRes;
+import com.example.demo.interfaces.rest.dto.GetProduct.GetProductsRes;
 
 import jakarta.validation.Valid;
 
@@ -30,15 +30,22 @@ public class ProductController {
      }
 
      @PostMapping
-     public ResponseEntity<ApiResponse<Product>> create(@Valid @RequestBody CreateProductRequest request) {
+     public ResponseEntity<CreateProductRes> create(@Valid @RequestBody CreateProductReq request) {
           Product created = createProduct.create(request.name);
-          return ResponseEntity.ok(ResponseFactory.success(created));
+          if (created == null) {
+               return ResponseEntity.ok(new CreateProductRes(1, "Error al crear el producto"));
+          }
+          return ResponseEntity.ok(new CreateProductRes(0, "ok", created));
      }
 
      @GetMapping
-     public ResponseEntity<ApiResponse<List<Product>>> getAll() {
+     public ResponseEntity<GetProductsRes> getAll() {
           List<Product> products = getAllProducts.getAll();
-          return ResponseEntity.ok(!products.isEmpty() ? ResponseFactory.success(products)
-                    : ResponseFactory.warning("No hay productos"));
+
+          if (products.isEmpty()) {
+               return ResponseEntity.ok(new GetProductsRes(1, "No hay productos"));
+          }
+
+          return ResponseEntity.ok(new GetProductsRes(0, "ok", products));
      }
 }

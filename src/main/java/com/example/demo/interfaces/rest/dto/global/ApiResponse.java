@@ -1,17 +1,15 @@
-package com.example.demo.interfaces.rest.dto;
+package com.example.demo.interfaces.rest.dto.global;
 
-public class ApiResponse<T> {
+public class ApiResponse {
      private int codigo;
      private String mensaje;
-     private T data;
 
      public ApiResponse() {
      }
 
-     public ApiResponse(int codigo, String mensaje, T data) {
+     public ApiResponse(int codigo, String mensaje) {
           this.codigo = codigo;
           this.mensaje = mensaje;
-          this.data = data;
      }
 
      public int getCodigo() {
@@ -28,13 +26,5 @@ public class ApiResponse<T> {
 
      public void setMensaje(String mensaje) {
           this.mensaje = mensaje;
-     }
-
-     public T getData() {
-          return data;
-     }
-
-     public void setData(T data) {
-          this.data = data;
      }
 }
