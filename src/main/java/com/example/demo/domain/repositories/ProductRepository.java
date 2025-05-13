@@ -1,6 +1,6 @@
 package com.example.demo.domain.repositories;
 
-import com.example.demo.domain.models.Product;
+import com.example.demo.domain.entities.Product;
 import java.util.List;
 
 public interface ProductRepository {

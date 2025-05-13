@@ -2,7 +2,7 @@ package com.example.demo.application.use_cases;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.domain.models.Product;
+import com.example.demo.domain.entities.Product;
 import com.example.demo.domain.repositories.ProductRepository;
 
 @Service
