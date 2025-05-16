@@ -2,20 +2,56 @@ package com.example.demo.infrastructure.data_sources;
 
 import javax.sql.DataSource;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Configuration
+@ConfigurationProperties(prefix = "database")
 public class DataSourceConfig {
-     @Bean
-     public DataSource dataSource() {
-          // Usamos H2 en memoria
-          DriverManagerDataSource dataSource = new DriverManagerDataSource();
-          dataSource.setDriverClassName("org.h2.Driver");
-          dataSource.setUrl("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1"); // Keep DB alive until app stops
-          dataSource.setUsername("sa");
-          dataSource.setPassword("");
-          return dataSource;
-     }
+
+    private String url;
+    private String driverClassName;
+    private String username;
+    private String password;
+
+    @Bean
+    DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(driverClassName);
+        dataSource.setUrl(url);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
+        return dataSource;
+    }
+
+    // 👇 ¡IMPORTANTE! Agrega estos métodos para que Spring pueda inyectar
+    public String getUrl() {
+        return url;
+    }
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getDriverClassName() {
+        return driverClassName;
+    }
+    public void setDriverClassName(String driverClassName) {
+        this.driverClassName = driverClassName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

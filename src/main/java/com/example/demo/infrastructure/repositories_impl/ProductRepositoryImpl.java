@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.domain.entities.Product;
 import com.example.demo.domain.repositories.ProductRepository;
 import com.example.demo.infrastructure.mappers.ProductMapper;
-import com.example.demo.infrastructure.models.ProductModel;
 
 @Repository
 public class ProductRepositoryImpl implements ProductRepository {
@@ -20,8 +19,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
      @Override
      public Product save(Product product) {
-          ProductModel savedModel = jpaRepo.save(ProductMapper.toModel(product));
-          return ProductMapper.toDomain(savedModel);
+          return ProductMapper.toDomain(jpaRepo.save(ProductMapper.toModel(product)));
      }
 
      @Override
